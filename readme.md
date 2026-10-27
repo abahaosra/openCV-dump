@@ -46,3 +46,34 @@ Sebelum menjalankan aplikasi, pastikan perangkat Anda telah memenuhi prasyarat b
 Ikuti langkah-langkah di bawah ini untuk mengatur dan menjalankan proyek secara lokal:
 
 1. **Clone repository ini:**
+git clone https://github.com/abahaosra/openCV-dump.git
+
+**Install opencv**
+pip install opencv-python numpy
+
+3. **Persiapkan Aset Game:**
+Pastikan file-file gambar aset berikut berukuran **32x32 piksel** dan tersimpan di dalam direktori yang sama dengan `intro.py`:
+* `jalan.png` (Tile jalan / `0`)
+* `tembok.png` (Tembok / `1`)
+* `Boundaries.png` (Batas / `2`)
+* `start.png` (Start / `3`)
+* `finish.png` (Exit / `4`)
+* `kunci.png` (Kunci B)
+* `NPC.png` (NPC D & G)
+* `gate.png` (Gate A, C, F)
+* `barang.png` (Barang E & Item H)
+
+## 📂 Struktur Direktori
+
+│
+├── intro.py            # Skrip utama permainan & logika OpenCV
+├── jalan.png           # Aset sprite jalan
+├── tembok.png          # Aset sprite tembok
+├── Boundaries.png      # Aset sprite batas map
+├── start.png           # Aset sprite zona awal
+├── finish.png          # Aset sprite zona akhir / exit
+├── kunci.png           # Aset sprite kunci (B)
+├── NPC.png             # Aset sprite NPC (D & G)
+├── gate.png            # Aset sprite gerbang (A, C, F)
+├── barang.png          # Aset sprite barang/item (E & H)
+└── README.md           # Dokumentasi proyek
