@@ -63,17 +63,3 @@ Pastikan file-file gambar aset berikut berukuran **32x32 piksel** dan tersimpan 
 * `gate.png` (Gate A, C, F)
 * `barang.png` (Barang E & Item H)
 
-## 📂 Struktur Direktori
-
-📦 C:\Users\gante\OneDrive\Documents\PCV\
- ┣ 📜 intro.py            # Skrip utama permainan & logika OpenCV
- ┣ 🖼️ jalan.png           # Aset sprite jalan
- ┣ 🖼️ tembok.png          # Aset sprite tembok
- ┣ 🖼️ Boundaries.png      # Aset sprite batas map
- ┣ 🖼️ start.png           # Aset sprite zona awal
- ┣ 🖼️ finish.png          # Aset sprite zona akhir / exit
- ┣ 🖼️ kunci.png           # Aset sprite kunci (B)
- ┣ 🖼️ NPC.png             # Aset sprite NPC (D & G)
- ┣ 🖼️ gate.png            # Aset sprite gerbang (A, C, F)
- ┣ 🖼️ barang.png          # Aset sprite barang/item (E & H)
- ┗ 📖 README.md           # Dokumentasi proyek
