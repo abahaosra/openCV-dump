@@ -4,21 +4,19 @@ import os
 from collections import deque
 import time
 
-# Ambil direktori absolut tempat file skrip ini berada
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# Ukuran viewport per layar game (20x15 tiles = 640x480 piksel)
 VIEW_COLS = 20
 VIEW_ROWS = 15
 TILE_SIZE = 32
-WIDTH = VIEW_COLS * TILE_SIZE  # 640
-HEIGHT = VIEW_ROWS * TILE_SIZE # 480
+WIDTH = VIEW_COLS * TILE_SIZE  
+HEIGHT = VIEW_ROWS * TILE_SIZE 
 
 cap = cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, WIDTH)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, HEIGHT)
 
-# --- LOAD ASSET SPRITE OTOMATIS ---
+
 def load_sprite(filename, default_color):
     full_path = os.path.join(BASE_DIR, filename)
     if os.path.exists(full_path):
@@ -56,7 +54,7 @@ def draw_tile(canvas, x1, y1, sprite):
     else:
         canvas[y1:y1+TILE_SIZE, x1:x1+TILE_SIZE] = sprite[:, :, :3]
 
-# Raw map string (40 Kolom x 30 Baris)
+
 raw_map_string = """
 2222222222222222222222222222222222222222
 2300000000000000000000111111111111111112
@@ -137,9 +135,7 @@ def is_walkable(r, c):
         return tile not in solid_ids
     return False
 
-# ==========================================
-# FASE 1: KALIBRASI WARNA DI AWAL
-# ==========================================
+
 calibrated_lower = None
 calibrated_upper = None
 is_calibrating = True
@@ -188,12 +184,10 @@ while cap.isOpened() and is_calibrating:
         cv2.destroyAllWindows()
         exit()
 
-# ==========================================
-# FASE 2: GAMEPLAY UTAMA (GRID ZONA NAVIGASI)
-# ==========================================
+
 print("Game RPG 2x2 World Active - Kontrol Zona Layar Aktif!")
 last_move_time = time.time()
-move_delay = 0.3  # Jeda waktu antar langkah
+move_delay = 0.3  
 
 while cap.isOpened():
     ret, frame = cap.read()
@@ -211,7 +205,7 @@ while cap.isOpened():
     mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
     mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
     
-    # Visualisasi Garis Pembagi Zona di Layar Webcam (Atas, Bawah, Kiri, Kanan)
+
     h_s, w_s, _ = frame.shape
     mid_x, mid_y = w_s // 2, h_s // 2
     cv2.line(frame, (mid_x, 0), (mid_x, h_s), (255, 255, 0), 1)
@@ -229,11 +223,7 @@ while cap.isOpened():
                 py = int(M["m01"] / M["m00"])
                 cv2.circle(frame, (px, py), 12, (0, 0, 255), -1)
                 
-                # Tentukan arah berdasarkan letak koordinat tangan di kuadran layar
-                # Atas: y < mid_y - 40
-                # Bawah: y > mid_y + 40
-                # Kiri: x < mid_x - 40
-                # Kanan: x > mid_x + 40
+
                 threshold = 40
                 if py < mid_y - threshold and abs(px - mid_x) < 150:
                     hand_direction = "ATAS"
@@ -244,7 +234,7 @@ while cap.isOpened():
                 elif px > mid_x + threshold and abs(py - mid_y) < 150:
                     hand_direction = "KANAN"
 
-    # Eksekusi Gerakan Berdasarkan Zona
+    
     current_time = time.time()
     if current_time - last_move_time > move_delay:
         r, c = char_global_pos[0], char_global_pos[1]
@@ -268,7 +258,7 @@ while cap.isOpened():
 
     check_item_pickup()
 
-    # Interaksi Spasi (untuk NPC / Gate)
+    
     key = cv2.waitKey(30) & 0xFF
     if key == ord(' '):
         gr, gc = char_global_pos[0], char_global_pos[1]
@@ -298,7 +288,7 @@ while cap.isOpened():
                     world_grid[nr, nc] = '0'
                     dialogue_text = "Gate F terbuka karena NPC G selesai!"
 
-    # Seamless Screen Teleport Logic
+
     local_c = char_global_pos[1] % VIEW_COLS
     local_r = char_global_pos[0] % VIEW_ROWS
     room_x = char_global_pos[1] // VIEW_COLS
